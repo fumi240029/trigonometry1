@@ -8,16 +8,16 @@
     <style>
         html,
         body {
-            background-color: #fff;
+            background-color: #eee;
         }
 
         .main {
-            position: absolute;
-            width: 100vw;
+            max-width: 600px;
+            width: 100%;
+            background-color: #fff;
+            margin-right: auto;
+            margin-left: auto;
             text-align: center;
-            margin: 0;
-            right: 0;
-            left: 0;
         }
 
         h1 {
@@ -36,31 +36,8 @@
             width: 100px;
             height: 80px;
         }
-
-        .blank {
-            height: calc(100vh - 700px);
-        }
-
-        #d {
-            display: inline-block;
-            top: 50vh;
-        }
-
-        #t {
-            display: inline-block;
-
-            bottom: 10vh;
-        }
-
-        #d2 {
-
-            position: absolute;
-            width: 100vw;
-            text-align: center;
-            margin: 0;
-            right: 0;
-            left: 0;
-            top: 35vh;
+        .blank{
+            height: calc(100vh - 600px);
         }
     </style>
 </head>
@@ -69,33 +46,25 @@
     <div class="main">
         <h1>問題</h1>
         <h3 id="q"></h3>
-        <h3 id="x"></h3>
         <div class="blank" style="position: relative;"></div>
-        <div id="d2">
-            <button onclick="r()" style="width: 100vw;">次の問題へ</button>
-            <br>
-            <br>
-            <br>
-            <br>
-            <table id="t">
-                <tr>
-                    <td>a</td>
-                    <td>a</td>
-                    <td>a</td>
-                </tr>
-                <tr>
-                    <td>a</td>
-                    <td>a</td>
-                    <td>a</td>
-                </tr>
-            </table>
-        </div>
+        <table id="t" style="display: inline-block;">
+            <tr>
+                <td>a</td>
+                <td>a</td>
+                <td>a</td>
+            </tr>
+            <tr>
+                <td>a</td>
+                <td>a</td>
+                <td>a</td>
+            </tr>
+        </table>
+
     </div>
 </body>
 <script>
     namel = ["sin", "cos", "tan"]
-    // degl1 = ["0", "30", "45", "60", "90", "120", "135", "150", "180"]
-    degl1 = ["0", "π/6", "π/4", "π/3", "π/2", "2π/3", "3π/4", "5π/6", "π"]
+    degl1 = [0, 30, 45, 60, 90, 120, 135, 150, 180]
     ans = ["none", "-√3", "-1", "-√3/2", "-1/√2", "-1/√3", "-1/2", "0", "1/2", "1/√3", "1/√2", "√3/2", "1", "√3"]
     out = {
         "sin": [7, 8, 10, 11, 12, 11, 10, 8, 7],
@@ -103,33 +72,13 @@
         "tan": [7, 9, 12, 13, 0, 1, 2, 5, 7]
     }
     document.getElementById("q").innerText = ""
-    qtype = -1
-    qdeg = -1
     r()
-    function r() {
-        qold = [qtype, qdeg]
-        qtype = Math.floor(Math.random() * 3)
-        qdeg = Math.floor(Math.random() * 9)
-        //再抽選
-        while (1) {
-            if (qtype == qold[0] || qdeg == qold[1]) {
-                qtype = Math.floor(Math.random() * 3)
-                qdeg = Math.floor(Math.random() * 9)
-            } else {
-                break;
-            }
 
-        }
-        //再抽選終わり
-        // <span style='border-bottom:solid 1px #000;'>
-        bunsu = degl1[qdeg].split("/")
-        bunsuw = ""
-        if (bunsu.length == 1) {
-            bunsuw = `${bunsu[0]}`
-        } else {
-            bunsuw = ` <span style='border-bottom:solid 3px #000;'>${bunsu[0]}</span><br>${bunsu[1]}`
-        }
-        document.getElementById("q").innerHTML = `<table id='d'><tr><td>${namel[qtype]}</td><td>${bunsuw} </td><td>rad = ?</td></tr></table>`
+    function r() {
+        qtype = Math.floor(Math.random() * 3)
+        qdeg = Math.floor(Math.random() * 4) + 5
+        qdeg = Math.floor(Math.random() * 9)
+        document.getElementById("q").innerText = `${namel[qtype]}${degl1[qdeg]}° = ?`
         let mh = "<tr>"
         for (let i = 0; i < ans.length; i++) {
             if (i % 5 == 0 && i != 0) {
@@ -142,26 +91,22 @@
     }
     function check(n) {
         if (out[namel[qtype]][qdeg] == n) {
-            document.getElementById("x").innerText = "正解"
-            document.getElementById("x").style.color = "#fff"
-            document.getElementById("x").style.backgroundColor = "#00f"
+            document.getElementById("q").style.color = "#fff"
+            document.getElementById("q").style.backgroundColor = "#00f"
             setTimeout(() => {
 
-                document.getElementById("x").innerText = ""
-                document.getElementById("x").style.color = "#000"
-                document.getElementById("x").style.backgroundColor = "#fff0"
+                document.getElementById("q").style.color = "#000"
+                document.getElementById("q").style.backgroundColor = "#fff0"
                 r()
-            }, 400);
+            }, 300);
         } else {
-            document.getElementById("x").innerText = "不正解"
-            document.getElementById("x").style.color = "#fff"
-            document.getElementById("x").style.backgroundColor = "#f00"
+            document.getElementById("q").style.color = "#fff"
+            document.getElementById("q").style.backgroundColor = "#f00"
             setTimeout(() => {
 
-                document.getElementById("x").innerText = ""
-                document.getElementById("x").style.color = "#000"
-                document.getElementById("x").style.backgroundColor = "#fff0"
-            }, 400);
+                document.getElementById("q").style.color = "#000"
+                document.getElementById("q").style.backgroundColor = "#fff0"
+            }, 300);
         }
     }
 </script>
