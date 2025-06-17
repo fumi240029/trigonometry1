@@ -53,14 +53,14 @@
         }
 
         #d2 {
-            
+
             position: absolute;
             width: 100vw;
             text-align: center;
             margin: 0;
             right: 0;
             left: 0;
-            top: 50vh;
+            top: 35vh;
         }
     </style>
 </head>
@@ -69,9 +69,14 @@
     <div class="main">
         <h1>問題</h1>
         <h3 id="q"></h3>
-        <h3 id="x">_</h3>
+        <h3 id="x"></h3>
         <div class="blank" style="position: relative;"></div>
         <div id="d2">
+            <button onclick="r()" style="width: 100vw;">次の問題へ</button>
+            <br>
+            <br>
+            <br>
+            <br>
             <table id="t">
                 <tr>
                     <td>a</td>
@@ -98,12 +103,24 @@
         "tan": [7, 9, 12, 13, 0, 1, 2, 5, 7]
     }
     document.getElementById("q").innerText = ""
+    qtype = -1
+    qdeg = -1
     r()
-
     function r() {
+        qold = [qtype, qdeg]
         qtype = Math.floor(Math.random() * 3)
-        qdeg = Math.floor(Math.random() * 4) + 5
         qdeg = Math.floor(Math.random() * 9)
+        //再抽選
+        while (1) {
+            if (qtype == qold[0] || qdeg == qold[1]) {
+                qtype = Math.floor(Math.random() * 3)
+                qdeg = Math.floor(Math.random() * 9)
+            } else {
+                break;
+            }
+
+        }
+        //再抽選終わり
         // <span style='border-bottom:solid 1px #000;'>
         bunsu = degl1[qdeg].split("/")
         bunsuw = ""
